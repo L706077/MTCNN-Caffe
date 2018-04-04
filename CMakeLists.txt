@@ -3,8 +3,24 @@ project(mtcnn_c)
 
 SET(CMAKE_C_COMPILER g++)
 SET(CMAK_CXX_COMPILER g++)
+
+###================
+set(Caffe_DIR)
+set(OpenCV_DIR "/home/ubuntu/opencv-2.4.13/release/")
+find_package(Caffe REQUIRED)
+###================
+
 add_compile_options(-std=c++11)
 add_compile_options(-m64)
+
+###================
+include_directories(/home/ubuntu/caffe/include)
+include_directories(/home/ubuntu/caffe/build/include)
+include_directories(/usr/include/hdf5/serial)
+
+link_directories(/home/ubuntu/caffe/build/lib)
+link_directories(/usr/lib/x86_64-linux-gnu/hdf5/serial)
+###================
 
 include_directories(
     ${mtcnn_c_SOURCE_DIR}/include/ 
@@ -28,5 +44,6 @@ target_link_libraries(mtcnn_c
     -lhdf5
     -lhdf5_hl
 )
+target_link_libraries(mtcnn_c caffe)
 
 #install(TARGETS mtcnn_c RUNTIME DESTINATION bin)
